@@ -330,6 +330,11 @@ public class Voters extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -466,6 +471,21 @@ public class Voters extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 filltable();        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+       int row = jTable1.getSelectedRow();
+       VoterName.setText(jTable1.getValueAt(jTable1.getSelectedRow(),1).toString());
+       VoterSurname.setText(jTable1.getValueAt(jTable1.getSelectedRow(),2).toString());
+       Constituency.setText(jTable1.getValueAt(jTable1.getSelectedRow(),5).toString());
+       Ward.setText(jTable1.getValueAt(jTable1.getSelectedRow(),6).toString());
+       Address.setText(jTable1.getValueAt(jTable1.getSelectedRow(),7).toString());
+        
+        
+        
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
