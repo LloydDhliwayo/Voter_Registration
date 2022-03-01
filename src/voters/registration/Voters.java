@@ -8,8 +8,10 @@ import java.awt.*;
 import java.sql.*;
 import java.util.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
+import java.util.Date;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -98,7 +100,7 @@ public class Voters extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        IdNumber = new javax.swing.JTextField();
+        VoterName = new javax.swing.JTextField();
         VoterSurname = new javax.swing.JTextField();
         Constituency = new javax.swing.JTextField();
         Ward = new javax.swing.JTextField();
@@ -106,9 +108,9 @@ public class Voters extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         BtnSave = new javax.swing.JButton();
         BtnUpdate = new javax.swing.JButton();
-        BtnSearch = new javax.swing.JButton();
+        BtnDelete = new javax.swing.JButton();
         BtnDisplay = new javax.swing.JButton();
-        BtnDelete1 = new javax.swing.JButton();
+        BtnSearch = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -118,7 +120,7 @@ public class Voters extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         Gender = new javax.swing.JComboBox<>();
         dob = new com.toedter.calendar.JDateChooser();
-        VoterName1 = new javax.swing.JTextField();
+        VoterId = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -147,7 +149,7 @@ public class Voters extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addGap(148, 148, 148))
         );
         jPanel1Layout.setVerticalGroup(
@@ -186,20 +188,25 @@ public class Voters extends javax.swing.JFrame {
         });
 
         BtnUpdate.setText("Update");
-
-        BtnSearch.setText("Search");
-        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
+        BtnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSearchActionPerformed(evt);
+                BtnUpdateActionPerformed(evt);
+            }
+        });
+
+        BtnDelete.setText("Delete");
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
             }
         });
 
         BtnDisplay.setText("Display All");
 
-        BtnDelete1.setText("Delete");
-        BtnDelete1.addActionListener(new java.awt.event.ActionListener() {
+        BtnSearch.setText("Search");
+        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnDelete1ActionPerformed(evt);
+                BtnSearchActionPerformed(evt);
             }
         });
 
@@ -214,13 +221,10 @@ public class Voters extends javax.swing.JFrame {
                     .addComponent(BtnDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                     .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap(153, Short.MAX_VALUE)
-                    .addComponent(BtnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(46, 46, 46)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,18 +232,17 @@ public class Voters extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
-                        .addComponent(BtnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap(94, Short.MAX_VALUE)
-                    .addComponent(BtnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(27, 27, 27)))
+                        .addComponent(BtnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BtnDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(37, Short.MAX_VALUE))))
         );
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -283,8 +286,8 @@ public class Voters extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(IdNumber)
-                            .addComponent(VoterName1))
+                            .addComponent(VoterName)
+                            .addComponent(VoterId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,8 +297,7 @@ public class Voters extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,11 +305,11 @@ public class Voters extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(IdNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(VoterName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(VoterName1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(VoterId, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(VoterSurname, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -382,7 +384,7 @@ public class Voters extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -409,7 +411,7 @@ public class Voters extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ConstituencyActionPerformed
 
-    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
         // TODO add your handling code here:
             if(jTable1.getSelectionModel().isSelectionEmpty()){JOptionPane.showMessageDialog(null,"Select Entry to delete from Table");return;}
          String option[]={"YES","NO"};
@@ -419,7 +421,7 @@ public class Voters extends javax.swing.JFrame {
        String ID = jTable1.getValueAt(index, 0).toString();
         if(response==0){
         if(deletevoter(ID)){JOptionPane.showMessageDialog(null, "ENRTY DELETED");;;
-        IdNumber.setText("");
+        VoterName.setText("");
         VoterSurname.setText("");
         Ward.setText("");
         Address.setText("");
@@ -450,22 +452,22 @@ public class Voters extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_BtnSearchActionPerformed
+    }//GEN-LAST:event_BtnDeleteActionPerformed
 
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         // TODO add your handling code here:
         Connection conn;
        // PreparedStatement insert;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String name = IdNumber.getText();
+        String name = VoterName.getText();
         String surname = VoterSurname.getText();
         Object gender = Gender.getSelectedItem();
-        //String birth = dob.getDateFormatString();
+        String voterid = VoterId.getText();
         Object thedate = dateFormat.format(dob.getDate());
         String constituency = Constituency.getText();
         String ward = Ward.getText();
         String address = Address.getText();
-        String newentry = "INSERT INTO `registered`(`NAME`, `SURNAME`, `GENDER`, `DOB`, `CONSTITUENCY`, `WARD`, `ADDRESS`) VALUES ('"+name+"','"+surname+"','"+gender+"','"+thedate+"','"+constituency+"','"+ward+"','"+address+"')";       
+        String newentry = "INSERT INTO `registered`(`voter_id`,`NAME`, `SURNAME`, `GENDER`, `DOB`, `CONSTITUENCY`, `WARD`, `ADDRESS`) VALUES ('"+voterid+"','"+name+"','"+surname+"','"+gender+"','"+thedate+"','"+constituency+"','"+ward+"','"+address+"')";       
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -495,22 +497,97 @@ filltable();        // TODO add your handling code here:
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+      String birthdate = jTable1.getValueAt(jTable1.getSelectedRow(),5).toString(); 
+         Date date;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate);
+              dob.setDate(date);
+        } catch (ParseException ex) {
+            Logger.getLogger(Voters.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
        int row = jTable1.getSelectedRow();
-       IdNumber.setText(jTable1.getValueAt(jTable1.getSelectedRow(),1).toString());
-       VoterSurname.setText(jTable1.getValueAt(jTable1.getSelectedRow(),2).toString());
-       Constituency.setText(jTable1.getValueAt(jTable1.getSelectedRow(),5).toString());
-       Ward.setText(jTable1.getValueAt(jTable1.getSelectedRow(),6).toString());
-       Address.setText(jTable1.getValueAt(jTable1.getSelectedRow(),7).toString());
+       VoterName.setText(jTable1.getValueAt(jTable1.getSelectedRow(),2).toString());
+        VoterId.setText(jTable1.getValueAt(jTable1.getSelectedRow(),1).toString());
+       VoterSurname.setText(jTable1.getValueAt(jTable1.getSelectedRow(),3).toString());
+       Constituency.setText(jTable1.getValueAt(jTable1.getSelectedRow(),6).toString());
+       Ward.setText(jTable1.getValueAt(jTable1.getSelectedRow(),7).toString());
+       Address.setText(jTable1.getValueAt(jTable1.getSelectedRow(),8).toString());
         
+                 
         
         
         
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void BtnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDelete1ActionPerformed
+    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnDelete1ActionPerformed
+        
+        
+         String id =  VoterId.getText();
+         
+             try
+                {
+                ps = conn.prepareStatement( "SELECT * FROM registered where voter_id = ?" );
+                ps.setString(1, id);
+                r = ps.executeQuery();
+    
+             if ( r.next() == true )
+                {
+              
+       String sex =     (r.getString(5));  
+       String birthdate = (r.getString(6)); 
+       Date date;
+       date = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate);
+       VoterName.setText(r.getString(3));
+       VoterSurname.setText(r.getString(4));
+       Constituency.setText(r.getString(7));
+       Ward.setText(r.getString(8));
+       Address.setText(r.getString(9));
+       Gender.setSelectedItem(sex);
+       dob.setDate(date);
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                }
+             else
+             {
+                 JOptionPane.showMessageDialog(this, "Record Not Found");
+             }
+                }
+                catch ( Exception e )
+                {
+                e.printStackTrace();
+                }  
+    }//GEN-LAST:event_BtnSearchActionPerformed
+
+    private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUpdateActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String name = VoterName.getText();
+        String surname = VoterSurname.getText();
+        Object gender = Gender.getSelectedItem();
+        String voterid = VoterId.getText();
+        Object thedate = dateFormat.format(dob.getDate());
+        String constituency = Constituency.getText();
+        String ward = Ward.getText();
+        String address = Address.getText();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_BtnUpdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -549,15 +626,15 @@ filltable();        // TODO add your handling code here:
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Address;
-    private javax.swing.JButton BtnDelete1;
+    private javax.swing.JButton BtnDelete;
     private javax.swing.JButton BtnDisplay;
     private javax.swing.JButton BtnSave;
     private javax.swing.JButton BtnSearch;
     private javax.swing.JButton BtnUpdate;
     private javax.swing.JTextField Constituency;
     private javax.swing.JComboBox<String> Gender;
-    private javax.swing.JTextField IdNumber;
-    private javax.swing.JTextField VoterName1;
+    private javax.swing.JTextField VoterId;
+    private javax.swing.JTextField VoterName;
     private javax.swing.JTextField VoterSurname;
     private javax.swing.JTextField Ward;
     private com.toedter.calendar.JDateChooser dob;
