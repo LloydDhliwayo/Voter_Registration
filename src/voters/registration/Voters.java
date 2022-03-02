@@ -40,8 +40,8 @@ public class Voters extends javax.swing.JFrame {
        TableColumn col0 = jTable1.getColumnModel().getColumn(0);
        jTable1.setModel(DbUtils.resultSetToTableModel(r));
        resizeColumnWidth(jTable1);
-       int count = r.getInt(1);
-       JOptionPane.showMessageDialog(null, count);
+      // int count = r.getInt(1);
+    //   JOptionPane.showMessageDialog(null, count);
      //  col0.setPreferredWidth(100);
       // jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//magic line , automatically adds horizontal scroll bar
        
