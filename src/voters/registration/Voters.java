@@ -267,6 +267,11 @@ public class Voters extends javax.swing.JFrame {
         jLabel11.setText("ADDRESS");
 
         Gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        Gender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -579,6 +584,44 @@ filltable();        // TODO add your handling code here:
         String ward = Ward.getText();
         String address = Address.getText();
         
+   try
+        {
+            ps = conn.prepareStatement("update registered set NAME = ?, SURNAME = ?, GENDER = ?, DOB = ?, CONSTITUENCY= ?, WARD = ?, ADDRESS = ?  where voter_id = ?");
+            ps.setString(1, name);
+            ps.setString(2, surname);
+            ps.setString(3, gender.toString());
+             ps.setString(4, thedate.toString());
+             ps.setString(5, constituency);
+             ps.setString(6, ward);
+             ps.setString(7, address);
+             ps.setString(8, voterid);
+            int k = ps.executeUpdate();
+            if(k==1)
+            {
+                JOptionPane.showMessageDialog(this, "Record Updated");
+                VoterName.setText("");
+                VoterSurname.setText("");
+                VoterId.setText("");
+                Ward.setText("");
+                Address.setText("");
+                Constituency.setText("");
+                dob.setDate(null);
+                filltable();
+                //txtpname.requestFocus();
+                //LoadProductno();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Record Failed");
+            }
+            
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(Voters.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    
         
         
         
@@ -588,6 +631,10 @@ filltable();        // TODO add your handling code here:
         
         
     }//GEN-LAST:event_BtnUpdateActionPerformed
+
+    private void GenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GenderActionPerformed
 
     /**
      * @param args the command line arguments
