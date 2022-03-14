@@ -16,7 +16,7 @@ public class VotersRegistration {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Voters voterreg = new Voters();
+        Log_in voterreg = new Log_in();
       voterreg.show();
     }
     
